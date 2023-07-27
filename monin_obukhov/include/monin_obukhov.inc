@@ -40,8 +40,7 @@ if(.not.module_is_initialized) call error_mesg('mo_drag_1d in monin_obukhov_mod'
      'monin_obukhov_init has not been called', FATAL)
 
 n      = size(pt)
-lavail = .false.
-if(present(avail)) lavail = .true.
+lavail = present(avail)
 
 
 if(lavail) then
@@ -60,7 +59,7 @@ call monin_obukhov_drag_1d(real(grav, FMS_MO_KIND_), real(vonkarm, FMS_MO_KIND_)
         & real(drag_min_heat, FMS_MO_KIND_), real(drag_min_moist, FMS_MO_KIND_), real(drag_min_mom, FMS_MO_KIND_),  &
         & n, real(pt, FMS_MO_KIND_), real(pt0, FMS_MO_KIND_), real(z, FMS_MO_KIND_), real(z0, FMS_MO_KIND_), &
         & real(zt, FMS_MO_KIND_), real(zq, FMS_MO_KIND_), real(speed, FMS_MO_KIND_), drag_m, drag_t,         &
-        & drag_q, u_star, b_star, lavail, avail, ier)
+        & drag_q, u_star, b_star, lavail, avail_dummy, ier)
 endif
 
 end subroutine MO_DRAG_1D_
@@ -76,7 +75,7 @@ real(kind=FMS_MO_KIND_),    intent(in) , dimension(:) :: z, z0, zt, zq, u_star, 
 real(kind=FMS_MO_KIND_),    intent(out), dimension(:) :: del_m, del_t, del_q
 logical, intent(in) , optional, dimension(:)          :: avail
 
-logical                                               :: dummy_avail(1)
+logical                                               :: avail_dummy(1)
 integer                                               :: n, ier
 
 
@@ -100,7 +99,7 @@ else
         & neutral, stable_option, new_mo_option, real(rich_crit, FMS_MO_KIND_), real(zeta_trans, FMS_MO_KIND_), &
         & n, real(zref, FMS_MO_KIND_), real(zref_t, FMS_MO_KIND_), real(z, FMS_MO_KIND_), real(z0, FMS_MO_KIND_), &
         & real(zt, FMS_MO_KIND_), real(zq, FMS_MO_KIND_), real(u_star, FMS_MO_KIND_), real(b_star, FMS_MO_KIND_), &
-        & real(q_star, FMS_MO_KIND_), del_m, del_t, del_q, .false., dummy_avail, ier)
+        & real(q_star, FMS_MO_KIND_), del_m, del_t, del_q, .false., avail_dummy, ier)
 
 endif
 
